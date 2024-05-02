@@ -95,29 +95,29 @@ studio.save
 #save studio to variable
 wb = Studio.find_by({"name"=>"Warner Bros."})
 
-#insert movies 
+# #insert movies 
 movie = Movie.new 
-movie["name"] = "Batman Begins"
+movie["title"] = "Batman Begins"
 movie["year_released"] = 2005
 movie["studio_id"]= wb["id"]
 movie["rated"] = "PG-13"
 movie.save 
 
 movie = Movie.new
-movie["name"] = "The Dark Knight"
+movie["title"] = "The Dark Knight"
 movie["year_released"] = 2008
 movie["studio_id"] = wb["id"]
 movie["rated"] = "PG-13"
 movie.save
 
 movie = Movie.new 
-movie["name"] = "The Dark Knight"
+movie["title"] = "The Dark Knight Rises"
 movie["year_released"] = 2012
 movie["studio_id"] = wb["id"]
 movie["rated"] = "PG-13"
 movie.save 
 
-#Insert actors into actor table
+# #Insert actors into actor table
 actor = Actor.new
 actor["name"] = "Christian Bale"
 actor.save 
@@ -162,24 +162,27 @@ actor = Actor.new
 actor["name"] = "Tom Hardy"
 actor.save 
 
-# save actors into variables
-joseph = = Actor.find_by({"name"=>"Joseph Gordon-Levitt"})
-maggie = = Actor.find_by({"name" => "Maggie Gyllenhaal"})
-anne = = Actor.find_by({"name"=> "Anne Hathaway"})
-tom = = Actor.find_by({"name"=>"Tom Hardy"})
+# # save actors into variables
+joseph = Actor.find_by({"name"=>"Joseph Gordon-Levitt"})
+maggie =  Actor.find_by({"name" => "Maggie Gyllenhaal"})
+anne = Actor.find_by({"name"=> "Anne Hathaway"})
+tom = Actor.find_by({"name"=>"Tom Hardy"})
 aaron = Actor.find_by({"name" => "Aaron Ekhart"})
-heath = = Actor.find_by({"name" => "Heath Ledger"})
-gary = = Actor.find_by({"name"=>"Gary"})
-liam = = Actor.find_by({"name"=>"Liam Neeson"})
-katie = = Actor.find_by({"name" => "Katie Holmes"})
+heath = Actor.find_by({"name" => "Heath Ledger"})
+gary = Actor.find_by({"name"=>"Gary Oldman"})
+liam =  Actor.find_by({"name"=>"Liam Neeson"})
+katie = Actor.find_by({"name" => "Katie Holmes"})
 michael = Actor.find_by({"name"=>"Michael Caine"})
 christian = Actor.find_by({"name" => "Christian Bale"})
-#save movies into variables
-movie1 = Movie.find_by({"name"=>"Batman Begins"})
-movie2 = Movie.find_by({"name"=>"The Dark Knight"})
-movie3 = Movie.find_by({"name"=>"The Dark Knight Rises"})
 
-#insert data into the roles table 
+# save movies into variables
+
+movie1 = Movie.find_by({"title"=>"Batman Begins"})
+
+movie2 = Movie.find_by({"title"=>"The Dark Knight"})
+movie3 = Movie.find_by({"title"=>"The Dark Knight Rises"})
+
+# #insert data into the roles table 
 role = Role.new 
 role["character_name"] = "Bruce Wayne"
 role["movie_id"]=movie1["id"]
@@ -270,9 +273,9 @@ role["movie_id"] = movie3["id"]
 role["actor_id"] = anne["id"]
 role.save 
 
-puts "There are #{Movie.count.all} movies"
-puts "There are #{Studio.count.all} studios"
-puts "There are #{Actor.count.all} actors"
+# database = Role.joins(:actor, :movie)
+
+# p database
 # Prints a header for the movies output
 puts "Movies"
 puts "======"
@@ -280,12 +283,37 @@ puts ""
 
 # Query the movies data and loop through the results to display the movies output.
 # TODO!
+movies_db = Movie.all
+movies = []
+for movie in movies_db
+    title = movie["title"]
+    year = movie["year_released"]
+    # year = year.to_s
+    rating = movie["rated"]
+
+    studio = Studio.find_by("id"=>movie["studio_id"])
+    studio_name = studio["name"]
+
+    film = {:name => "#{title}",  :rated => "#{rating}", :studio => "#{studio_name}"}
+    movies.push(film)
+   
+end 
+
+
 
 # Prints a header for the cast output
 puts ""
 puts "Top Cast"
 puts "========"
 puts ""
+
+# loop through movies
+for movie in movies_db
+    # find all roles for the each movie movie 
+
+end
+
+
 
 # Query the cast data and loop through the results to display the cast output for each movie.
 # TODO!
