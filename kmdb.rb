@@ -178,9 +178,9 @@ christian = Actor.find_by({"name" => "Christian Bale"})
 # save movies into variables
 
 movie1 = Movie.find_by({"title"=>"Batman Begins"})
-
 movie2 = Movie.find_by({"title"=>"The Dark Knight"})
 movie3 = Movie.find_by({"title"=>"The Dark Knight Rises"})
+
 
 # #insert data into the roles table 
 role = Role.new 
@@ -283,8 +283,9 @@ puts ""
 
 # Query the movies data and loop through the results to display the movies output.
 # TODO!
+
 movies_db = Movie.all
-movies = []
+
 for movie in movies_db
     title = movie["title"]
     year = movie["year_released"]
@@ -293,12 +294,12 @@ for movie in movies_db
 
     studio = Studio.find_by("id"=>movie["studio_id"])
     studio_name = studio["name"]
+    puts "#{title}  #{year} #{rating} #{studio_name}"
 
-    film = {:name => "#{title}",  :rated => "#{rating}", :studio => "#{studio_name}"}
-    movies.push(film)
+    # film = {:name => "#{title}",  :rated => "#{rating}", :studio => "#{studio_name}"}
+    # movies.push(film)
    
 end 
-
 
 
 # Prints a header for the cast output
@@ -307,13 +308,20 @@ puts "Top Cast"
 puts "========"
 puts ""
 
-# loop through movies
-for movie in movies_db
-    # find all roles for the each movie movie 
-
-end
-
-
 
 # Query the cast data and loop through the results to display the cast output for each movie.
 # TODO!
+cast = Role.all 
+
+for role in cast
+    movie = Movie.find_by("id"=>role["movie_id"])
+    movie_name  = movie["title"]
+
+    actor = Actor.find_by("id"=>role["actor_id"])
+    actor_name = actor["name"]
+
+    character = role["character_name"]
+
+    puts "#{movie_name} #{actor_name} #{character}"
+
+end 
